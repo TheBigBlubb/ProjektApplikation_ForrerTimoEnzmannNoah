@@ -64,11 +64,15 @@ def draw():
     
     print speedX, speedY, start
     
-    image(img, 10, 600, 150, 150/1.6375)
     if showTriangle == 1:
         background(255,255,255)
-        triangle(clickX, clickY, speedX*10 + clickX, speedY*10 + clickY, speedX*10 + clickX + 10, speedY*10 + clickY - (10*speedX/speedY))
-
+        tx2 = 50+ mouseX - clickX
+        ty2 = 650 + mouseY - clickY
+        if tx2 > 200:
+            tx2 = 200
+        triangle(50, 650, tx2, ty2, tx2 + 5, ty2 + 5)
+        
+    image(img, 10, 600, 150, 150/1.6375)
         
     if projY > 650:
             start = 0
