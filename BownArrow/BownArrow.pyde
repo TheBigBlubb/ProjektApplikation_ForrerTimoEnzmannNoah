@@ -12,13 +12,16 @@ releaseX = 0
 releaseY = 0
 #gravitation
 gravity = 1
+showTriangle = 0
 
 def mousePressed():
     global clickX
     global clickY
+    global showTriangle
 
     clickX = mouseX
     clickY = mouseY
+    showTriangle = 1
     
 def mouseReleased():
     global releaseX
@@ -30,7 +33,9 @@ def mouseReleased():
     global start
     global projX
     global projY
-
+    global showTriangle
+ 
+    showTriangle = 0   
     projY = 650
     projX = 50
     
@@ -46,21 +51,25 @@ def mouseReleased():
     
 
 def setup():
+    global img
+    
     size(1500, 700)
     background(255,255,255)
     frameRate(25)
+    img = loadImage("Archer.png")
 
 def draw():
-    global gravity
-    global start
-    global speedX
-    global speedY
-    global projX
-    global projY
+    global gravity, showTriangle, start,  img
+    global clickX, clickY, speedX, speedY, projX, projY
     
     print speedX, speedY, start
     
-    circle(50, 650, 30)
+    image(img, 10, 600, 150, 150/1.6375)
+    if showTriangle == 1:
+        background(255,255,255)
+        triangle(clickX, clickY, speedX*10 + clickX, speedY*10 + clickY, speedX*10 + clickX + 10, speedY*10 + clickY - (10*speedX/speedY))
+
+        
     if projY > 650:
             start = 0
     if start == 1:
@@ -68,4 +77,4 @@ def draw():
         projX = projX + speedX
         projY = projY + speedY
         speedY += gravity
-        
+    
