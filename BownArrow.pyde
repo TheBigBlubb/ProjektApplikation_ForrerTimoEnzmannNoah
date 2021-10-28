@@ -17,6 +17,11 @@ def mousePressed():
     global clickX
     global clickY
 
+    clickX = mouseX
+    clickY = mouseY
+    
+def mouseReleased():
+    global releaseX
     global releaseY
     global clickX
     global clickY
