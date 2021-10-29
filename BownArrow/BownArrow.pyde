@@ -5,35 +5,26 @@ projY = 450
 #Tempo des Projektils
 speedX = 1
 speedY = -10
-#deltaberechnung
+#Deltaberechnung
 clickX = 0
 clickY = 0
 releaseX = 0
 releaseY = 0
-#gravitation
+#Gravitation
 gravity = 1
 showTriangle = 0
 
 def mousePressed():
-    global clickX
-    global clickY
     global showTriangle
+    global clickX, clickY
 
     clickX = mouseX
     clickY = mouseY
     showTriangle = 1
     
 def mouseReleased():
-    global releaseX
-    global releaseY
-    global clickX
-    global clickY
-    global speedX
-    global speedY
-    global start
-    global projX
-    global projY
-    global showTriangle
+    global start, showTriangle
+    global clickX, clickY, speedX, speedY, projX, projY
  
     showTriangle = 0   
     projY = 650
@@ -49,7 +40,6 @@ def mouseReleased():
     if speedX > 20:
         speedX = 20
     
-
 def setup():
     global img
     
@@ -81,4 +71,3 @@ def draw():
         projX = projX + speedX
         projY = projY + speedY
         speedY += gravity
-    
