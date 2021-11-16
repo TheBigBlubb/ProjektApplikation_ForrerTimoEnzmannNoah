@@ -57,12 +57,12 @@ def mouseReleased():
 
 def setup():
     global img, bimg
-    
+       
     size(1500, 700)
-    background(255,255,255)
     frameRate(25)
     img = loadImage("Archer.png")
     bimg = loadImage("Background.png")
+    image(bimg,0,0) 
 
 def draw():
     global gravity, showTriangle, start,  img, bimg, treffer, fth, zielX, zielY
@@ -70,8 +70,8 @@ def draw():
 
     print speedX, speedY, start
 
-    image(bimg,0,0)
     if showTriangle == 1:
+        image(bimg,0,0) 
         tx2 = 50+ mouseX - clickX
         ty2 = 650 + mouseY - clickY
         if tx2 > 200:
@@ -92,6 +92,8 @@ def draw():
 #Debug Linien zur Anzeige der y Werte des Trefferbereichs (zu einem Zeitpunkt in de das Ziel statisch generiert wurde
 #        line(600,315,650,315)
 #        line(600,285,650,285)
+        stroke(80,80,80)
+        fill(80,80,80)
         circle(projX, projY, 10)
         projX = projX + speedX
         projY = projY + speedY
