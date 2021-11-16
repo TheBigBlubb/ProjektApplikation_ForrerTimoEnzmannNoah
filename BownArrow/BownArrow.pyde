@@ -1,3 +1,5 @@
+from Zielscheibe import zielScheibe
+
 start = 0
 #Position des Projektils
 projX = 50
@@ -37,8 +39,8 @@ def mouseReleased():
     speedX = (releaseX - clickX) / 10
     speedY = (releaseY - clickY) / 10
     #limitier geschwindigkeit in Xrichtung. Yrichtung bleibt frei, ist aber schwieriger zu zielen
-    if speedX > 20:
-        speedX = 20
+    if speedX > 25:
+        speedX = 25
     
 def setup():
     global img
@@ -53,6 +55,7 @@ def draw():
     global clickX, clickY, speedX, speedY, projX, projY
     
     print speedX, speedY, start
+    zielScheibe(100,100)
     
     if showTriangle == 1:
         background(255,255,255)
@@ -60,6 +63,7 @@ def draw():
         ty2 = 650 + mouseY - clickY
         if tx2 > 200:
             tx2 = 200
+        fill(0,0,0)
         triangle(50, 650, tx2, ty2, tx2 + 5, ty2 + 5)
         
     image(img, 10, 600, 150, 150/1.6375)
@@ -67,6 +71,7 @@ def draw():
     if projY > 650:
             start = 0
     if start == 1:
+        fill(255,255,255)
         circle(projX, projY, 10)
         projX = projX + speedX
         projY = projY + speedY
