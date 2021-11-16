@@ -18,6 +18,9 @@ gravity = 1
 showTriangle = 0
 treffer = 0
 fth = 0 #frame bis treffer (frames to hit)
+zielX = random(500,1400)
+zielY = random(50,650)
+
 
 def mousePressed():
     global showTriangle
@@ -28,7 +31,7 @@ def mousePressed():
     showTriangle = 1
     
 def mouseReleased():
-    global start, showTriangle, fth, treffer
+    global start, showTriangle, fth, treffer, zielX, zielY
     global clickX, clickY, speedX, speedY, projX, projY
  
     showTriangle = 0   
@@ -36,7 +39,7 @@ def mouseReleased():
     projX = 50
     
     start = 1
-    background(255,255,255)
+    #background(255,255,255)
     releaseX = mouseX
     releaseY = mouseY
     speedX = (releaseX - clickX) / 10
@@ -44,8 +47,8 @@ def mouseReleased():
     #limitiert geschwindigkeit in Xrichtung. Yrichtung bleibt frei, ist aber schwieriger zu zielen
     if speedX > 25:
         speedX = 25
-    treffer, fth = trefferBerechnung(50,600,650,300,gravity,speedX,speedY, 15)
-    fth = fth + frameCount + 2
+    treffer, fth = trefferBerechnung(50,zielX,650,zielY,gravity,speedX,speedY, 15)
+    fth = fth + frameCount +1
 
 def setup():
     global img
@@ -56,7 +59,7 @@ def setup():
     img = loadImage("Archer.png")
 
 def draw():
-    global gravity, showTriangle, start,  img, treffer, fth
+    global gravity, showTriangle, start,  img, treffer, fth, zielX, zielY
     global clickX, clickY, speedX, speedY, projX, projY
 
     print speedX, speedY, start
@@ -73,15 +76,21 @@ def draw():
 
         
     image(img, 10, 600, 150, 150/1.6375)
-    zielScheibe(600,300)
+    zielScheibe(zielX,zielY)
         
     if projY > 650:
             start = 0
     if (start == 1 and treffer==0) or (start==1 and treffer==1 and frameCount<fth):
         fill(255,255,255)
-        line(600,315,650,315)
-        line(600,285,650,285)
+#Debug Linien zur Anzeige der y Werte des Trefferbereichs (zu einem Zeitpunkt in de das Ziel statisch generiert wurde
+#        line(600,315,650,315)
+#        line(600,285,650,285)
         circle(projX, projY, 10)
         projX = projX + speedX
         projY = projY + speedY
         speedY += gravity
+    if treffer==1 and frameCount-80>=fth:
+        zielX = random(500,1400)
+        zielY = random(50,650)
+        treffer = 2
+        
