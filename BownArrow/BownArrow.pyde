@@ -1,20 +1,24 @@
 from Zielscheibe import zielScheibe
 from TrefferBerechnung import trefferBerechnung
+from AnzeigeWerte import werteAnzeige
+from Lineal import lineal
 
 start = 0
 #Position des Projektils
 projX = 50
 projY = 450
 #Tempo des Projektils
-speedX = 1
-speedY = -10
+speedX = 0.0
+speedY = 0.0
+speedXold = 0.0
+speedYold = 0.0
 #Deltaberechnung
-clickX = 0
-clickY = 0
-releaseX = 0
-releaseY = 0
+clickX = 0.0
+clickY = 0.0
+releaseX = 0.0
+releaseY = 0.0
 #Gravitation
-gravity = 1
+gravity = 0.981
 showTriangle = 0
 treffer = 0
 fth = 0 #frame bis treffer (frames to hit)
@@ -32,41 +36,42 @@ def mousePressed():
     
 def mouseReleased():
     global start, showTriangle, fth, treffer, zielX, zielY
-    global clickX, clickY, speedX, speedY, projX, projY
+    global clickX, clickY, speedX, speedY, projX, projY, speedXold, speedYold
  
     showTriangle = 0   
     projY = 650
     projX = 50
     
     start = 1
-    #background(255,255,255)
     releaseX = mouseX
     releaseY = mouseY
     speedX = (releaseX - clickX) / 10
     speedY = (releaseY - clickY) / 10
     #limitiert geschwindigkeit in Xrichtung. Yrichtung bleibt frei, ist aber schwieriger zu zielen
     if speedX > 25:
-        speedX = 25
-    treffer, fth = trefferBerechnung(50,zielX,650,zielY,gravity,speedX,speedY, 15)
+        speedX = 25.0
+    speedXold = speedX
+    speedYold = speedY
+    treffer, fth = trefferBerechnung(50.0,zielX,650.0,zielY,gravity,speedX,speedY, 15)
     fth = fth + frameCount +1
 
 def setup():
-    global img
+    global img, bimg
     
     size(1500, 700)
     background(255,255,255)
     frameRate(25)
     img = loadImage("Archer.png")
+    bimg = loadImage("Background.png")
 
 def draw():
-    global gravity, showTriangle, start,  img, treffer, fth, zielX, zielY
-    global clickX, clickY, speedX, speedY, projX, projY
+    global gravity, showTriangle, start,  img, bimg, treffer, fth, zielX, zielY
+    global clickX, clickY, speedX, speedY, projX, projY, speedXold, speedYold
 
     print speedX, speedY, start
 
-    
+    image(bimg,0,0)
     if showTriangle == 1:
-        background(255,255,255)
         tx2 = 50+ mouseX - clickX
         ty2 = 650 + mouseY - clickY
         if tx2 > 200:
@@ -77,7 +82,9 @@ def draw():
         
     image(img, 10, 600, 150, 150/1.6375)
     zielScheibe(zielX,zielY)
-        
+    werteAnzeige(0, sqrt(sq(speedXold)+sq(speedYold)), speedXold, speedYold)
+    lineal()
+                    
     if projY > 650:
             start = 0
     if (start == 1 and treffer==0) or (start==1 and treffer==1 and frameCount<fth):
