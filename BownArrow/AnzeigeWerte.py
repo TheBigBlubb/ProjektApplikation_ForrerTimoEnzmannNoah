@@ -1,3 +1,4 @@
+#Die Werte, die eingegeben werden, werden angezeigt
 def werteAnzeige(score,speed,speedXold, speedYold):
     fill(255,255,255)
     rect(0, 0, 300, 150) 

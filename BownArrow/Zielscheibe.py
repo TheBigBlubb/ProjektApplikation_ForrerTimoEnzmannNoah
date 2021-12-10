@@ -1,3 +1,4 @@
+#an der eingegeben Position, wird eine Zielscheibe mit Durchmesser 30px generiert
 def zielScheibe(xPos,yPos):
     stroke(0,0,0)
     fill(255,0,0)

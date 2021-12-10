@@ -1,3 +1,4 @@
+#Dieser Codeabschnitt berechnet, ob der Schuss, der abgegeben wurde auch trifft.  
 def trefferBerechnung(xstart,xziel,ystart,yziel,gravity,speedx, speedystart,toleranz):
     frames = 0.001
     y=0.001

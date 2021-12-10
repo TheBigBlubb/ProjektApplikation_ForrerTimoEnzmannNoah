@@ -29,7 +29,8 @@ score = 0
 
 def setup():
     global img, bimg
-       
+
+#Die Fenstergrösse wird festgelegt, die Framerate auf 25 gesetzt (Für die Mathematik), Das Hintergrundbild und die Kanone werden geladen.    
     size(1500, 700)
     frameRate(25)
     img = loadImage("Archer.png")
@@ -39,9 +40,9 @@ def setup():
 def draw():
     global gravity, showTriangle, start,  img, bimg, treffer, fth, zielX, zielY
     global clickX, clickY, speedX, speedY, projX, projY, speedXold, speedYold, score
-
+#Konsolenausgabe fürs Debugging
     print speedX, speedY, start
-
+#Die Schussstärkenanzeige wird generiert
     if showTriangle == 1:
         image(bimg,0,0) 
         tx2 = 50+ mouseX - clickX
@@ -50,12 +51,12 @@ def draw():
             tx2 = 250
         fill(0,0,0)
         triangle(50, 650, tx2, ty2, tx2 + 5, ty2 + 5)
-
+#Die Kanone wird eingeblendet, Zielscheiben werden generiert, die Scoretafel wird in der oberen linken Ecke angezeigt, der Lineal wird erstellt
     image(img, -5, 550, 150, 150)
     zielScheibe(zielX,zielY)
     werteAnzeige(score, sqrt(sq(speedXold)+sq(speedYold)), speedXold, speedYold)
     lineal()
-                    
+#bei Treffer oder Bodenberührung wird die alte Kanonenkugel zurückgesetzt                    
     if projY > 650:
             start = 0
     if (start == 1 and treffer==0) or (start==1 and treffer==1 and frameCount<fth):
@@ -69,12 +70,13 @@ def draw():
         projX = projX + speedX
         projY = projY + speedY
         speedY += gravity
-    if treffer==1 and frameCount-80>=fth:
+#Nach einem Treffer wird mit etwas Verzögerung eine neue Poeition der Zielscheibe generiert und die Trefferanzeige geht einen Schritt nach oben.
+    if treffer==1 and frameCount-50>=fth:
         zielX = random(500,1400)
         zielY = random(50,400)
         treffer = 2
         score = score + 1
-
+#Messung der Schussstärke anhand der Mauspositionen
 def mousePressed():
     global showTriangle
     global clickX, clickY
